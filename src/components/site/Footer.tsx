@@ -37,14 +37,14 @@ const ease = [0.2, 0.7, 0.2, 1] as const;
 export function Footer() {
   return (
     <footer id="contact" className="relative bg-ink text-paper">
-      <div className="container-x py-24 lg:py-32">
+      <div className="container-x py-16 sm:py-20 lg:py-28 xl:py-32">
         {/* Contact callout */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease }}
-          className="grid grid-cols-12 gap-6 border-b border-paper/15 pb-16"
+          className="grid grid-cols-12 gap-6 border-b border-paper/15 pb-12 sm:pb-16"
         >
           <div className="col-span-12 lg:col-span-7">
             <div className="overline text-paper/55">07 — Contact</div>
@@ -63,11 +63,11 @@ export function Footer() {
                 <li key={p}>
                   <a
                     href={`tel:${p}`}
-                    className="group flex items-center justify-between border-b border-paper/20 pb-3 transition hover:border-paper"
+                    className="group flex min-h-12 flex-wrap items-center justify-between gap-2 border-b border-paper/20 py-2 transition hover:border-paper sm:min-h-0 sm:pb-3 sm:py-0"
                   >
-                    <span className="inline-flex items-center gap-3">
-                      <Phone className="h-4 w-4 text-paper/60" />
-                      <span className="font-mono text-lg lg:text-xl tracking-wider">{p}</span>
+                    <span className="inline-flex min-w-0 items-center gap-3">
+                      <Phone className="h-4 w-4 shrink-0 text-paper/60" />
+                      <span className="font-mono text-base tracking-wider sm:text-lg lg:text-xl">{p}</span>
                     </span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
                   </a>
@@ -87,7 +87,7 @@ export function Footer() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease }}
           id="contact-form"
-          className="scroll-mt-32 border-b border-paper/15 pb-16 pt-2 lg:scroll-mt-36"
+          className="scroll-mt-28 border-b border-paper/15 pb-12 pt-2 sm:scroll-mt-32 sm:pb-16 lg:scroll-mt-36"
         >
           <p className="max-w-xl text-[15px] leading-relaxed text-paper/65">
             You can also send a written enquiry, we typically respond within one business day.
@@ -103,16 +103,16 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.4, ease }}
-          className="my-20 lg:my-28"
+          className="mt-12 sm:my-16 lg:my-20 xl:my-28"
         >
-          <div className="font-display font-light leading-none text-[clamp(7.5rem,8vw,5rem)] text-paper select-none">
-            Lynek International Limited
+          <div className="font-display font-light leading-[1.05] text-paper select-none">
+            <div className="text-[clamp(1.75rem,7.2vw,4.5rem)] text-balance wrap-break-word">
+              Lynek International Limited
+            </div>
           </div>
-     
         </motion.div>
 
-        {/* Link grid */}
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 border-t border-paper/15 pt-14">
+        <div className="grid gap-10 border-t border-paper/15 pt-10 sm:gap-12 sm:pt-14 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-3">
               <img src={logo} alt="Lynek International" className="h-10 w-10 object-contain" />
@@ -128,7 +128,7 @@ export function Footer() {
                   key={i}
                   href="/#contact"
                   aria-label="Contact"
-                  className="grid h-9 w-9 place-items-center border border-paper/20 transition hover:bg-paper hover:text-ink"
+                  className="grid h-11 w-11 place-items-center border border-paper/20 transition hover:bg-paper hover:text-ink"
                 >
                   <Icon className="h-4 w-4" />
                 </a>

@@ -40,7 +40,7 @@ export function Sustainability() {
   const imgY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
 
   return (
-    <section id="philosophy" ref={ref} className="relative overflow-hidden bg-paper py-32 lg:py-40">
+    <section id="philosophy" ref={ref} className="relative overflow-hidden bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
       <div className="container-x grid grid-cols-12 gap-6 lg:gap-12">
         <motion.div
           style={{ y: imgY }}
@@ -60,9 +60,9 @@ export function Sustainability() {
               className="w-full object-cover aspect-[4/5]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 text-paper">
-              <div className="overline opacity-70">Field — Niger Delta</div>
-              <div className="font-display text-2xl mt-2">Built to lead. Built to endure.</div>
+            <div className="absolute bottom-4 left-4 right-4 text-paper sm:bottom-6 sm:left-6 sm:right-6">
+              <div className="overline text-[10px] opacity-70 sm:text-[11px]">Field — Niger Delta</div>
+              <div className="font-display mt-1 text-lg leading-tight sm:mt-2 sm:text-2xl">Built to lead. Built to endure.</div>
             </div>
           </div>
         </motion.div>
@@ -93,7 +93,7 @@ export function Sustainability() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease, delay: 0.2 }}
-            className="mt-8 max-w-xl space-y-5 text-pretty text-[17px] leading-relaxed text-ink-2"
+            className="mt-8 max-w-xl space-y-4 text-pretty text-[15px] leading-relaxed text-ink-2 sm:space-y-5 sm:text-[17px]"
           >
             <p>
               The vision behind Lynek International was shaped through years of discipline, sacrifice and deep
@@ -117,13 +117,15 @@ export function Sustainability() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.8, ease, delay: 0.25 + i * 0.06 }}
-                className="grid grid-cols-12 gap-6 py-7 items-baseline"
+                className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-12 sm:gap-6 sm:py-7 items-start sm:items-baseline"
               >
-                <div className="col-span-1 overline text-ink-3">0{i + 1}</div>
-                <div className="col-span-4 lg:col-span-3 font-display text-4xl lg:text-5xl text-eco">{m.v}</div>
-                <div className="col-span-7 lg:col-span-8">
-                  <div className="font-display text-xl text-ink leading-snug">{m.headline}</div>
-                  <p className="mt-3 text-ink-2 text-[15px] leading-relaxed">{m.body}</p>
+                <div className="col-span-12 sm:col-span-1 overline text-ink-3">0{i + 1}</div>
+                <div className="col-span-12 sm:col-span-3 lg:col-span-3 font-display text-3xl text-eco sm:text-4xl lg:text-5xl">
+                  {m.v}
+                </div>
+                <div className="col-span-12 sm:col-span-8 lg:col-span-8">
+                  <div className="font-display text-lg text-ink leading-snug sm:text-xl">{m.headline}</div>
+                  <p className="mt-2 text-ink-2 text-[14px] leading-relaxed sm:mt-3 sm:text-[15px]">{m.body}</p>
                 </div>
               </motion.li>
             ))}

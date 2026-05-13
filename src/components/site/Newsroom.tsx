@@ -64,9 +64,9 @@ function formatArticleDate(iso: string) {
 
 export function Newsroom() {
   return (
-    <section id="newsroom" className="bg-paper py-32 lg:py-40">
+    <section id="newsroom" className="bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
       <div className="container-x">
-        <div className="grid grid-cols-12 gap-6 mb-16 items-end">
+        <div className="grid grid-cols-12 gap-6 mb-12 items-end sm:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ export function Newsroom() {
                   className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-105"
                 />
               </div>
-              <div className="flex flex-col flex-1 p-6 lg:p-7">
+              <div className="flex flex-col flex-1 p-5 sm:p-6 lg:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <time
                     dateTime={a.date}

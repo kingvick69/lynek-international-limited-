@@ -21,7 +21,7 @@ const pillars = [
 export function Careers() {
   return (
     <>
-      <section className="border-b border-rule bg-paper pt-28 pb-20 lg:pt-36 lg:pb-28">
+      <section className="border-b border-rule bg-paper pb-16 pt-[calc(6.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-32 lg:pb-28 lg:pt-36">
         <div className="container-x">
           <div className="grid grid-cols-12 gap-10 lg:gap-14 items-start">
             <motion.div
@@ -46,8 +46,8 @@ export function Careers() {
               transition={{ duration: 1, ease, delay: 0.12 }}
               className="col-span-12 lg:col-span-7"
             >
-              <div className="border border-rule bg-paper shadow-[var(--shadow-card)] p-8 lg:p-10">
-                <div className="flex items-start gap-4">
+              <div className="border border-rule bg-paper p-5 shadow-[var(--shadow-card)] sm:p-8 lg:p-10">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                   <span className="grid h-12 w-12 shrink-0 place-items-center border border-rule text-ink">
                     <Briefcase className="h-5 w-5" aria-hidden />
                   </span>
@@ -80,7 +80,7 @@ export function Careers() {
         </div>
       </section>
 
-      <section className="bg-paper py-20 lg:py-28">
+      <section className="bg-paper py-16 sm:py-20 lg:py-28">
         <div className="container-x">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

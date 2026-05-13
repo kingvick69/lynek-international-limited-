@@ -103,6 +103,7 @@
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
@@ -113,7 +114,9 @@
 }
 
 @layer utilities {
-  .container-x { @apply mx-auto max-w-[88rem] px-6 lg:px-12; }
+  .container-x {
+    @apply mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-12;
+  }
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
   .font-display { font-family: var(--font-display); }

@@ -31,7 +31,7 @@ const tenure = [
 
 export function People() {
   return (
-    <section id="founder" className="bg-paper py-32 lg:py-40">
+    <section id="founder" className="bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
       <div className="container-x">
         <div className="grid grid-cols-12 gap-6 mb-20 items-end">
           <motion.div
@@ -87,9 +87,9 @@ export function People() {
                 className="w-full object-cover aspect-[4/5]"
               />
             </div>
-            <figcaption className="mt-6 border-t border-rule pt-5">
-              <div className="font-display text-xl text-ink">Dr. Engr. Irivike Lucky Ewhuba</div>
-              <div className="overline text-ink-3 mt-2">
+            <figcaption className="mt-5 border-t border-rule pt-4 sm:mt-6 sm:pt-5">
+              <div className="font-display text-lg text-ink sm:text-xl">Dr. Engr. Irivike Lucky Ewhuba</div>
+              <div className="overline text-ink-3 mt-2 text-[10px] leading-relaxed sm:text-[11px]">
                 Founder · Well Intervention Superintendent, Heritage Energy Operational Services Limited
               </div>
             </figcaption>
@@ -97,7 +97,7 @@ export function People() {
 
           <div className="col-span-12 lg:col-span-7" id="about">
             <div className="overline text-ink-3">About the founder</div>
-            <blockquote className="mt-6 font-display font-light text-pretty text-[clamp(1.5rem,2.6vw,2.4rem)] leading-[1.2] text-ink">
+            <blockquote className="mt-6 font-display font-light text-pretty text-[clamp(1.25rem,5.5vw,2.4rem)] leading-[1.25] text-ink sm:leading-[1.2]">
               <span className="text-ink-3 mr-1">&ldquo;</span>
               Greatness is achieved not by comfort, but through years of discipline,
               sacrifice, courage, and the willingness to rise above limitations.
@@ -176,11 +176,13 @@ export function People() {
               <div className="overline text-ink-3">Education &amp; certification</div>
               <ul className="mt-5 divide-y divide-rule border-y border-rule">
                 {credentials.map((c) => (
-                  <li key={c.k} className="grid grid-cols-12 gap-4 py-4">
-                    <div className="col-span-3 lg:col-span-2 font-mono text-[11px] uppercase tracking-widest text-ink-3 pt-1">
+                  <li key={c.k} className="grid grid-cols-1 gap-2 py-4 sm:grid-cols-12 sm:gap-4">
+                    <div className="col-span-12 sm:col-span-2 font-mono text-[10px] uppercase tracking-widest text-ink-3 sm:pt-1 sm:text-[11px]">
                       {c.k}
                     </div>
-                    <div className="col-span-9 lg:col-span-10 text-ink-2 text-[15px] leading-relaxed">{c.v}</div>
+                    <div className="col-span-12 sm:col-span-10 text-ink-2 text-[14px] leading-relaxed sm:text-[15px]">
+                      {c.v}
+                    </div>
                   </li>
                 ))}
               </ul>

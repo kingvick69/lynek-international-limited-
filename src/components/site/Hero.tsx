@@ -30,7 +30,7 @@ export function Hero() {
 
       <motion.div
         style={{ y: textY, opacity }}
-        className="relative z-10 container-x flex min-h-[100svh] flex-col justify-end pt-32 pb-24"
+        className="relative z-10 container-x flex min-h-[100svh] flex-col justify-end pb-16 pt-[calc(7.25rem+env(safe-area-inset-top,0px))] sm:pb-24 sm:pt-32"
       >
         <div className="grid grid-cols-12 gap-6 items-end">
           <div className="col-span-12 lg:col-span-8">
@@ -44,7 +44,7 @@ export function Hero() {
               <span>Lynek · International Limited</span>
             </motion.div>
 
-            <h1 className="mt-7 font-display font-light leading-[0.95] text-[clamp(2.75rem,7.5vw,7rem)] text-balance">
+            <h1 className="mt-5 font-display font-light leading-[0.98] text-[clamp(2rem,6.5vw,7rem)] text-balance sm:mt-7 sm:leading-[0.95]">
               {"Engineering the standard of Nigerian energy.".split(" ").map((w, i) => (
                 <motion.span
                   key={i}
@@ -62,7 +62,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7, ease }}
-              className="mt-8 max-w-xl text-pretty text-base lg:text-[17px] leading-relaxed text-paper/75"
+              className="mt-6 max-w-xl text-pretty text-[15px] leading-relaxed text-paper/75 sm:mt-8 sm:text-base lg:text-[17px]"
             >
               A legacy-driven engineering institution delivering well intervention,
               instrumentation, and operations excellence across Nigeria's oil and gas
@@ -74,7 +74,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.85, ease }}
-            className="col-span-12 lg:col-span-4 flex flex-col gap-5 lg:items-end"
+            className="col-span-12 lg:col-span-4 flex flex-col gap-4 sm:gap-5 lg:items-end"
           >
             <a href="/#operations" className="arrow-link text-paper hover:text-paper">
               Explore the company <ArrowRight className="h-4 w-4" />
@@ -96,19 +96,21 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.1, ease }}
-          className="mt-20 grid grid-cols-12 items-end gap-6 border-t border-paper/15 pt-8"
+          className="mt-12 grid grid-cols-1 gap-6 border-t border-paper/15 pt-6 sm:mt-16 sm:grid-cols-2 sm:pt-8 lg:mt-20 lg:grid-cols-12 lg:items-end"
         >
-          <div className="col-span-12 lg:col-span-4">
+          <div className="sm:col-span-1 lg:col-span-4">
             <div className="overline text-paper/55">Discipline</div>
-            <div className="mt-2 font-mono text-sm">Well Intervention · Instrumentation · QA/QC</div>
+            <div className="mt-2 font-mono text-xs leading-snug sm:text-sm">
+              Well Intervention · Instrumentation · QA/QC
+            </div>
           </div>
-          <div className="col-span-6 lg:col-span-4">
+          <div className="sm:col-span-1 lg:col-span-4">
             <div className="overline text-paper/55">Operating across</div>
-            <div className="mt-2 font-mono text-sm">OML-30 · Niger Delta · Nigeria</div>
+            <div className="mt-2 font-mono text-xs leading-snug sm:text-sm">OML-30 · Niger Delta · Nigeria</div>
           </div>
-          <div className="col-span-6 lg:col-span-4 lg:text-right">
+          <div className="sm:col-span-2 sm:text-left lg:col-span-4 lg:text-right">
             <div className="overline text-paper/55">Field experience</div>
-            <div className="mt-2 font-display text-3xl">20+ yrs</div>
+            <div className="mt-2 font-display text-2xl sm:text-3xl">20+ yrs</div>
           </div>
         </motion.div>
       </motion.div>

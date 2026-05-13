@@ -36,9 +36,9 @@ export function CarbonDiagram() {
   const current = steps.find((s) => s.id === active)!;
 
   return (
-    <section className="relative bg-ink text-paper py-32 lg:py-40 overflow-hidden">
+    <section className="relative bg-ink text-paper py-20 sm:py-28 lg:py-32 xl:py-40 overflow-hidden">
       <div className="container-x">
-        <div className="grid grid-cols-12 gap-6 mb-20 items-end">
+        <div className="grid grid-cols-12 gap-6 mb-14 items-end sm:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,35 +69,35 @@ export function CarbonDiagram() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-start">
           <div className="col-span-12 lg:col-span-7">
-            <div className="relative">
-              <div className="absolute top-7 left-7 right-7 h-px bg-paper/15" />
+            <div className="relative px-1 sm:px-0">
+              <div className="absolute top-7 left-4 right-4 h-px bg-paper/15 sm:left-7 sm:right-7" />
               <motion.div
-                className="absolute top-7 left-7 h-px bg-primary-bright origin-left"
+                className="absolute top-7 left-4 right-4 h-px bg-primary-bright origin-left sm:left-7 sm:right-7"
                 animate={{ scaleX: (active - 1) / (steps.length - 1) }}
                 transition={{ duration: 0.6, ease }}
-                style={{ right: "1.75rem" }}
               />
-              <div className="relative grid grid-cols-4 gap-4">
+              <div className="relative grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-4">
                 {steps.map((s, i) => (
                   <button
+                    type="button"
                     key={s.id}
                     onClick={() => setActive(s.id)}
                     onMouseEnter={() => setActive(s.id)}
-                    className="group flex flex-col items-start text-left"
+                    className="group flex min-h-[44px] flex-col items-start gap-1 text-left sm:min-h-0"
                   >
                     <span
-                      className={`grid h-14 w-14 place-items-center rounded-full border transition-all duration-500 ${
+                      className={`grid h-12 w-12 shrink-0 place-items-center rounded-full border transition-all duration-500 sm:h-14 sm:w-14 ${
                         active === s.id
                           ? "border-primary-bright bg-primary-bright text-ink scale-110"
                           : "border-paper/30 text-paper/70 group-hover:border-paper"
                       }`}
                     >
-                      <span className="font-mono text-sm">0{i + 1}</span>
+                      <span className="font-mono text-xs sm:text-sm">0{i + 1}</span>
                     </span>
                     <span
-                      className={`mt-5 font-display text-xl transition-colors ${
+                      className={`mt-2 font-display text-base transition-colors sm:mt-5 sm:text-xl ${
                         active === s.id ? "text-paper" : "text-paper/60"
                       }`}
                     >
@@ -109,7 +109,7 @@ export function CarbonDiagram() {
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-5 lg:pl-8 lg:border-l lg:border-paper/15">
+          <div className="col-span-12 border-t border-paper/15 pt-10 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0 lg:border-paper/15">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.id}
@@ -119,8 +119,8 @@ export function CarbonDiagram() {
                 transition={{ duration: 0.5, ease }}
               >
                 <div className="overline text-primary-bright">Stage 0{current.id} of {steps.length}</div>
-                <h3 className="mt-4 font-display text-4xl lg:text-5xl">{current.title}</h3>
-                <p className="mt-5 text-paper/75 text-[16px] leading-relaxed">{current.body}</p>
+                <h3 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl">{current.title}</h3>
+                <p className="mt-4 text-paper/75 text-[15px] leading-relaxed sm:mt-5 sm:text-[16px]">{current.body}</p>
                 <div className="mt-6 font-mono text-[11px] uppercase tracking-widest text-paper/55">
                   {current.detail}
                 </div>

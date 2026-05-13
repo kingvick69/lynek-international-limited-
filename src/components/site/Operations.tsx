@@ -51,9 +51,9 @@ export function Operations() {
   const [hover, setHover] = useState<number | null>(null);
 
   return (
-    <section id="services" className="relative bg-paper py-32 lg:py-40">
+    <section id="services" className="relative bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
       <div className="container-x">
-        <div className="grid grid-cols-12 gap-6 mb-20 lg:mb-28 items-end">
+        <div className="grid grid-cols-12 gap-6 mb-16 sm:mb-20 lg:mb-28 items-end">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -92,8 +92,8 @@ export function Operations() {
           transition={{ duration: 0.9, ease }}
           className="mb-16 lg:mb-20"
         >
-          <div className="overline text-ink-3 mb-4">Equipment &amp; field execution</div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+          <div className="overline text-ink-3 mb-3 sm:mb-4">Equipment &amp; field execution</div>
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             {items.map((it, i) => (
               <motion.div
                 key={it.n}
@@ -129,28 +129,28 @@ export function Operations() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.9, ease, delay: i * 0.06 }}
               onMouseEnter={() => setHover(i)}
-              className="group relative grid grid-cols-12 gap-6 border-b border-rule py-10 lg:py-14"
+              className="group relative grid grid-cols-1 gap-4 border-b border-rule py-8 sm:grid-cols-12 sm:gap-6 sm:py-10 lg:py-14"
             >
               <span className="pointer-events-none absolute inset-0 -z-0 origin-left scale-x-0 bg-ink transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-x-100" />
 
-              <div className="relative col-span-2 lg:col-span-1 overline text-ink-3 transition-colors group-hover:text-paper/60">
+              <div className="relative col-span-12 sm:col-span-2 lg:col-span-1 overline text-ink-3 transition-colors group-hover:text-paper/60">
                 {it.n}
               </div>
-              <div className="relative col-span-10 lg:col-span-4">
-                <h3 className="font-display text-3xl lg:text-5xl text-ink transition-colors group-hover:text-paper">
+              <div className="relative col-span-12 sm:col-span-10 lg:col-span-4">
+                <h3 className="font-display text-2xl text-ink transition-colors group-hover:text-paper sm:text-3xl lg:text-5xl">
                   {it.title}
                 </h3>
                 <div className="mt-2 overline text-ink-3 transition-colors group-hover:text-paper/60">
                   {it.sub}
                 </div>
               </div>
-              <div className="relative col-span-12 lg:col-span-5 text-pretty text-ink-2 leading-relaxed text-[15px] transition-colors group-hover:text-paper/85">
+              <div className="relative col-span-12 lg:col-span-5 text-pretty text-ink-2 text-[14px] leading-relaxed transition-colors group-hover:text-paper/85 sm:text-[15px]">
                 {it.body}
                 <div className="mt-3 font-mono text-[11px] uppercase tracking-widest text-ink-3 transition-colors group-hover:text-paper/55">
                   {it.locations}
                 </div>
               </div>
-              <div className="relative col-span-12 lg:col-span-2 flex lg:justify-end items-center text-ink transition-colors group-hover:text-paper">
+              <div className="relative col-span-12 lg:col-span-2 flex justify-start items-center text-ink transition-colors group-hover:text-paper lg:justify-end">
                 <ArrowUpRight className="h-6 w-6 transition-transform duration-500 group-hover:rotate-45" />
               </div>
             </motion.a>

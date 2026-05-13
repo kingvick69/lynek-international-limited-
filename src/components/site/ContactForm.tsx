@@ -191,7 +191,7 @@ export function ContactForm({ className }: ContactFormProps) {
           )}
         />
 
-        <Button type="submit" className="min-w-[140px]" disabled={form.formState.isSubmitting}>
+        <Button type="submit" className="min-h-11 w-full min-w-[140px] sm:w-auto" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? (
             <>
               <Loader2 className="animate-spin" aria-hidden />

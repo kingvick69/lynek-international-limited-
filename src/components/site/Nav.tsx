@@ -47,10 +47,10 @@ export function Nav() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* Ticker bar */}
+    <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)]">
+      {/* Ticker bar — slimmer on small screens to leave more room for content */}
       <div className="marquee overflow-hidden bg-ink text-paper/85 border-b border-white/10">
-        <div className="marquee-track py-2 text-[11px] font-mono">
+        <div className="marquee-track py-1.5 text-[10px] sm:py-2 sm:text-[11px] font-mono">
           {[...tickers, ...tickers].map((t, i) => (
             <span key={i} className="flex shrink-0 items-center gap-2 px-6 whitespace-nowrap">
               <span className="text-paper/55">{t.name}</span>
@@ -74,16 +74,18 @@ export function Nav() {
             : "bg-transparent text-paper"
         }`}
       >
-        <div className="container-x flex h-16 items-center justify-between">
-          <a href="/" className="flex items-center gap-3">
+        <div className="container-x flex min-h-14 sm:min-h-16 h-14 sm:h-16 items-center justify-between gap-3">
+          <a href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
             <img
               src={logo}
               alt="Lynek International"
-              className="h-9 w-9 object-contain"
+              className="h-8 w-8 shrink-0 object-contain sm:h-9 sm:w-9"
             />
-            <span className="flex items-baseline gap-2.5">
-              <span className="font-display text-2xl tracking-tight font-medium">Lynek</span>
-              <span className="overline opacity-60">International</span>
+            <span className="flex min-w-0 flex-col gap-0 sm:flex-row sm:items-baseline sm:gap-2.5">
+              <span className="font-display text-lg tracking-tight font-medium sm:text-2xl">Lynek</span>
+              <span className="overline hidden text-[10px] opacity-60 sm:inline sm:text-[11px]">
+                International
+              </span>
             </span>
           </a>
 
@@ -110,22 +112,28 @@ export function Nav() {
           </div>
 
           <button
-            className="lg:hidden"
+            type="button"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md lg:hidden"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Menu"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
         {open && (
-          <div className="lg:hidden border-t border-current/10 bg-paper text-ink">
-            <nav className="container-x flex flex-col py-2">
+          <div
+            id="mobile-nav"
+            className="lg:hidden max-h-[min(70vh,28rem)] overflow-y-auto overscroll-y-contain border-t border-current/10 bg-paper text-ink shadow-lg"
+          >
+            <nav className="container-x flex flex-col py-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
               {links.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 border-b border-rule text-sm font-medium"
+                  className="py-3.5 text-[15px] font-medium leading-snug border-b border-rule last:border-b-0 active:bg-muted/50"
                 >
                   {l.label}
                 </a>

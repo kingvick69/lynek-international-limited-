@@ -31,7 +31,7 @@ export function GlobalReach() {
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" />
 
-      <div className="container-x relative py-32 lg:py-44">
+      <div className="container-x relative py-20 sm:py-28 lg:py-36 xl:py-44">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ export function GlobalReach() {
           Anchored in the <em className="italic">Niger Delta</em>. Engineered for the world.
         </motion.h2>
 
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-paper/15 border border-paper/15">
+        <div className="mt-12 grid grid-cols-1 gap-px bg-paper/15 border border-paper/15 sm:mt-16 sm:grid-cols-2 md:grid-cols-4">
           {stats.map(([n, l, sub], i) => (
             <motion.div
               key={l}
@@ -60,11 +60,11 @@ export function GlobalReach() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.9, ease, delay: i * 0.08 }}
-              className="bg-ink p-8 lg:p-10"
+              className="bg-ink p-6 sm:p-8 lg:p-10"
             >
-              <div className="font-display text-5xl lg:text-6xl text-paper">{n}</div>
-              <div className="mt-4 overline text-paper/65">{l}</div>
-              <div className="mt-2 text-sm text-paper/55 leading-relaxed">{sub}</div>
+              <div className="font-display text-4xl text-paper sm:text-5xl lg:text-6xl">{n}</div>
+              <div className="mt-3 overline text-paper/65 sm:mt-4">{l}</div>
+              <div className="mt-2 text-xs text-paper/55 leading-relaxed sm:text-sm">{sub}</div>
             </motion.div>
           ))}
         </div>
