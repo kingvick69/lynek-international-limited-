@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import founderImg from "@/assets/employee-1.jpg";
+import founderImg from "@/assets/founder.png";
 import { ArrowUpRight } from "lucide-react";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
