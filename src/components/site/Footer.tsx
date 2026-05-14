@@ -3,7 +3,7 @@ import { ArrowRight, Linkedin, Phone, Mail, MapPin } from "lucide-react";
 import logo from "@/assets/lynek-logo.png";
 import { ContactForm } from "@/components/site/ContactForm";
 
-const phones = ["07055742773", "07072437336", "07011060586"];
+const phones = ["+2347055742773", "+2347072437336", "+2347011060586"];
 const email = "info@lynekinltd.com";
 
 const cols: {

@@ -3,7 +3,8 @@ import { ArrowUpRight, Briefcase, Phone } from "lucide-react";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
 
-const officePhone = "07055742773";
+const officePhone = "+2347055742773";
+const email = "info@lynekinltd.com";
 
 const pillars = [
   {
@@ -75,8 +76,8 @@ export function Careers() {
                       >
                         <Phone className="h-4 w-4" /> Call the office
                       </a>
-                      <a href="/#contact" className="arrow-link inline-flex text-ink">
-                        Contact the office <ArrowUpRight className="h-4 w-4" />
+                      <a href={`mailto:${email}`} className="arrow-link inline-flex text-ink">
+                        Mail us <ArrowUpRight className="h-4 w-4" />
                       </a>
                     </div>
                   </div>
