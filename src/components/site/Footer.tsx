@@ -15,7 +15,7 @@ const cols: {
     links: [
       { label: "Well Construction", href: "/#services" },
       { label: "Well Intervention", href: "/#services" },
-      { label: "Well Abandorment", href: "/#services" },
+      { label: "Well Abandonment", href: "/#services" },
       { label: "Instrumentation & Control", href: "/#services" },
       { label: "Operations Management", href: "/#services" },
       { label: "Asset Management", href: "/#services" },
