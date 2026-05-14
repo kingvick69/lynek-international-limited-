@@ -59,7 +59,7 @@ export function People() {
                 width={800}
                 height={1024}
                 loading="lazy"
-                className="w-full object-cover aspect-[4/5]"
+                className="w-full object-cover object-top aspect-[4/5]"
               />
             </div>
             <figcaption className="mt-5 border-t border-rule pt-4 sm:mt-6 sm:pt-5">
