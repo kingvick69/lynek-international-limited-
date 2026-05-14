@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Briefcase } from "lucide-react";
+import { ArrowUpRight, Briefcase, Phone } from "lucide-react";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
+
+const officePhone = "07055742773";
 
 const pillars = [
   {
@@ -66,12 +68,17 @@ export function Careers() {
                       <span className="font-mono text-[13px] text-ink">Careers — speculative</span> in the
                       subject line.
                     </p>
-                    <a
-                      href="/#contact"
-                      className="arrow-link mt-8 inline-flex text-ink"
-                    >
-                      Contact the office <ArrowUpRight className="h-4 w-4" />
-                    </a>
+                    <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                      <a
+                        href={`tel:${officePhone}`}
+                        className="inline-flex min-h-11 items-center justify-center gap-2 bg-ink px-5 text-[14px] font-medium text-paper transition hover:bg-ink/90"
+                      >
+                        <Phone className="h-4 w-4" /> Call the office
+                      </a>
+                      <a href="/#contact" className="arrow-link inline-flex text-ink">
+                        Contact the office <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

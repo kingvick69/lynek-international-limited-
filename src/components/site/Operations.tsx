@@ -5,19 +5,39 @@ import engine1 from "@/assets/engine 1.png";
 import engine2 from "@/assets/engine 2.png";
 import engine3 from "@/assets/engine 3.png";
 import teamWorking from "@/assets/team working.png";
+import heroPlatform from "@/assets/hero-platform.jpg";
+import sustainability from "@/assets/sustainability.jpg";
 
 const items = [
   {
     n: "01",
-    title: "Well Intervention",
-    sub: "Production restoration & optimisation",
-    body: "Perforation extensions, tubing integrity checks, gas-lift valve change-outs, cement squeeze, water shut-off and coil tubing operations across mature Niger Delta assets.",
+    title: "Well Construction",
+    sub: "Drilling support & completions",
+    body: "Drilling support, casing and cementing oversight, wellhead installation and completion engineering — building wells to specification, safely and on schedule from spud to handover.",
     img: engine1,
     imgAlt: "Wellhead and valve assemblies staged for field operations",
-    locations: "Afiesere · Eriemu · Olomoro · Kokori · Uzere · Evwreni",
+    locations: "",
   },
   {
     n: "02",
+    title: "Well Intervention",
+    sub: "Production restoration & optimisation",
+    body: "Perforation extensions, tubing integrity checks, gas-lift valve change-outs, cement squeeze, water shut-off and coil tubing operations across mature Niger Delta assets.",
+    img: engine3,
+    imgAlt: "High-pressure manifold valve assembly prepared for deployment",
+    locations: "",
+  },
+  {
+    n: "03",
+    title: "Well Shut Down",
+    sub: "Isolation, suspension & abandonment",
+    body: "Planned and emergency well shut-in, isolation and suspension — securing wells through to decommissioning and abandonment with full regulatory and well-integrity compliance.",
+    img: engine2,
+    imgAlt: "Industrial fittings and pressure hardware in workshop staging",
+    locations: "",
+  },
+  {
+    n: "04",
     title: "Instrumentation & Control",
     sub: "Engineering & Commissioning",
     body: "Design, installation and commissioning of remote monitoring systems, control loops and production facility instrumentation — IWCF and EWIL certified delivery.",
@@ -26,16 +46,43 @@ const items = [
     locations: "Onshore · Swamp · Shallow water",
   },
   {
-    n: "03",
+    n: "05",
     title: "Operations Management",
     sub: "Field leadership & QA/QC",
     body: "Multidisciplinary supervision, HSSE governance, job hazard analysis and rigorous quality assurance — engineered for high-risk environments where precision is non-negotiable.",
     img: engine3,
     imgAlt: "High-pressure manifold valve assembly prepared for deployment",
-    locations: "OML-30 Assets · Heritage Energy",
+    locations: "",
   },
   {
-    n: "04",
+    n: "06",
+    title: "Asset Management",
+    sub: "Integrity & lifecycle optimisation",
+    body: "Lifecycle planning, integrity monitoring and performance optimisation of production assets — maximising uptime, extending asset life and protecting long-term value for operators.",
+    img: heroPlatform,
+    imgAlt: "Offshore production platform at sea",
+    locations: "",
+  },
+  {
+    n: "07",
+    title: "Equipment Procurement & Logistics",
+    sub: "Supply chain & field delivery",
+    body: "Sourcing, expediting and delivery of certified oilfield equipment and materials — managed supply chains, inspection and on-time logistics from vendor to wellsite.",
+    img: engine1,
+    imgAlt: "Wellhead and valve assemblies staged for field operations",
+    locations: "",
+  },
+  {
+    n: "08",
+    title: "Oil Rig Waste Management",
+    sub: "Environmental compliance",
+    body: "Collection, treatment and responsible disposal of drilling and production waste — minimising environmental impact and keeping operations within HSSE and regulatory standards.",
+    img: sustainability,
+    imgAlt: "Environmental and sustainability operations in the field",
+    locations: "",
+  },
+  {
+    n: "09",
     title: "Capacity Development",
     sub: "Training & local content",
     body: "Mentorship, structured technical training and exposure to high-level projects — building the next generation of Nigerian engineers and technicians.",
@@ -94,7 +141,7 @@ export function Operations() {
         >
           <div className="overline text-ink-3 mb-3 sm:mb-4">Equipment &amp; field execution</div>
           <div className="grid grid-cols-1 min-[480px]:grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-            {items.map((it, i) => (
+            {items.slice(0, 8).map((it, i) => (
               <motion.div
                 key={it.n}
                 initial={{ opacity: 0, y: 16 }}
@@ -146,9 +193,11 @@ export function Operations() {
               </div>
               <div className="relative col-span-12 lg:col-span-5 text-pretty text-ink-2 text-[14px] leading-relaxed transition-colors group-hover:text-paper/85 sm:text-[15px]">
                 {it.body}
-                <div className="mt-3 font-mono text-[11px] uppercase tracking-widest text-ink-3 transition-colors group-hover:text-paper/55">
-                  {it.locations}
-                </div>
+                {it.locations ? (
+                  <div className="mt-3 font-mono text-[11px] uppercase tracking-widest text-ink-3 transition-colors group-hover:text-paper/55">
+                    {it.locations}
+                  </div>
+                ) : null}
               </div>
               <div className="relative col-span-12 lg:col-span-2 flex justify-start items-center text-ink transition-colors group-hover:text-paper lg:justify-end">
                 <ArrowUpRight className="h-6 w-6 transition-transform duration-500 group-hover:rotate-45" />
@@ -156,7 +205,7 @@ export function Operations() {
             </motion.a>
           ))}
 
-          <div className="pointer-events-none absolute right-0 top-0 hidden lg:block w-[26rem] h-[18rem]">
+          <div className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block w-[26rem] h-[18rem]">
             {items.map((it, i) => (
               <motion.img
                 key={it.n}
@@ -169,7 +218,6 @@ export function Operations() {
                   scale: hover === i ? 1 : 1.05,
                 }}
                 transition={{ duration: 0.5, ease }}
-                style={{ top: `${i * 14 + 8}rem` }}
               />
             ))}
           </div>

@@ -38,11 +38,7 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-function delay(ms: number) {
-  return new Promise<void>((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mbdwedww";
 
 type ContactFormProps = {
   className?: string;
@@ -50,6 +46,7 @@ type ContactFormProps = {
 
 export function ContactForm({ className }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -62,10 +59,37 @@ export function ContactForm({ className }: ContactFormProps) {
     },
   });
 
-  async function onSubmit(_values: ContactFormValues) {
-    await delay(600);
-    setSubmitted(true);
-    form.reset();
+  async function onSubmit(values: ContactFormValues) {
+    setSubmitError(null);
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { errors?: { message: string }[] }
+          | null;
+        throw new Error(
+          data?.errors?.map((error) => error.message).join(", ") ||
+            "Something went wrong while sending your message.",
+        );
+      }
+
+      setSubmitted(true);
+      form.reset();
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while sending your message.",
+      );
+    }
   }
 
   function handleSendAnother() {
@@ -190,6 +214,12 @@ export function ContactForm({ className }: ContactFormProps) {
             </FormItem>
           )}
         />
+
+        {submitError ? (
+          <p className="text-[14px] leading-relaxed text-red-600" role="alert">
+            {submitError}
+          </p>
+        ) : null}
 
         <Button type="submit" className="min-h-11 w-full min-w-[140px] sm:w-auto" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting ? (

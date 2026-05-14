@@ -65,7 +65,7 @@ export function CarbonDiagram() {
             className="col-span-12 lg:col-span-3 lg:text-right text-paper/65 text-sm leading-relaxed"
           >
             An interactive look at the four-stage methodology behind every Lynek
-            intervention campaign — proven across OML-30 assets.
+            intervention campaign — proven across various assets, e.g. OML-30, OML-40.
           </motion.div>
         </div>
 

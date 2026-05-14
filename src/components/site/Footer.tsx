@@ -4,6 +4,7 @@ import logo from "@/assets/lynek-logo.png";
 import { ContactForm } from "@/components/site/ContactForm";
 
 const phones = ["07055742773", "07072437336", "07011060586"];
+const email = "info@lynekinltd.com";
 
 const cols: {
   title: string;
@@ -12,10 +13,14 @@ const cols: {
   {
     title: "Services",
     links: [
+      { label: "Well Construction", href: "/#services" },
       { label: "Well Intervention", href: "/#services" },
+      { label: "Well Shut Down", href: "/#services" },
       { label: "Instrumentation & Control", href: "/#services" },
       { label: "Operations Management", href: "/#services" },
-      { label: "QA / QC", href: "/#services" },
+      { label: "Asset Management", href: "/#services" },
+      { label: "Equipment Procurement & Logistics", href: "/#services" },
+      { label: "Oil Rig Waste Management", href: "/#services" },
       { label: "Capacity Development", href: "/#services" },
     ],
   },
@@ -73,6 +78,18 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={`mailto:${email}`}
+                  className="group flex min-h-12 flex-wrap items-center justify-between gap-2 border-b border-paper/20 py-2 transition hover:border-paper sm:min-h-0 sm:pb-3 sm:py-0"
+                >
+                  <span className="inline-flex min-w-0 items-center gap-3">
+                    <Mail className="h-4 w-4 shrink-0 text-paper/60" />
+                    <span className="font-mono text-sm tracking-wider break-all sm:text-base lg:text-lg">{email}</span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-500 group-hover:translate-x-1" />
+                </a>
+              </li>
             </ul>
             <p className="mt-4 text-[11px] font-mono uppercase tracking-widest text-paper/45">
               Call or SMS — not available on WhatsApp.
@@ -123,11 +140,15 @@ export function Footer() {
               and industrial sectors with precision, integrity and discipline.
             </p>
             <div className="mt-6 flex gap-2">
-              {[Linkedin, Mail, MapPin].map((Icon, i) => (
+              {[
+                { Icon: Linkedin, href: "/#contact", label: "LinkedIn" },
+                { Icon: Mail, href: `mailto:${email}`, label: "Email" },
+                { Icon: MapPin, href: "/#contact", label: "Location" },
+              ].map(({ Icon, href, label }) => (
                 <a
-                  key={i}
-                  href="/#contact"
-                  aria-label="Contact"
+                  key={label}
+                  href={href}
+                  aria-label={label}
                   className="grid h-11 w-11 place-items-center border border-paper/20 transition hover:bg-paper hover:text-ink"
                 >
                   <Icon className="h-4 w-4" />
@@ -167,6 +188,14 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={`mailto:${email}`}
+                  className="text-paper/80 hover:text-paper transition break-all"
+                >
+                  {email}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

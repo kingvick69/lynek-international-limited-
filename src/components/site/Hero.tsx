@@ -106,7 +106,7 @@ export function Hero() {
           </div>
           <div className="sm:col-span-1 lg:col-span-4">
             <div className="overline text-paper/55">Operating across</div>
-            <div className="mt-2 font-mono text-xs leading-snug sm:text-sm">OML-30 · Niger Delta · Nigeria</div>
+            <div className="mt-2 font-mono text-xs leading-snug sm:text-sm">Niger Delta · Nigeria</div>
           </div>
           <div className="sm:col-span-2 sm:text-left lg:col-span-4 lg:text-right">
             <div className="overline text-paper/55">Field experience</div>

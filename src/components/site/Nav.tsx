@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { useRouterState } from "@tanstack/react-router";
-import { Search, Globe, Menu, X, ArrowUp, ArrowDown } from "lucide-react";
+import { Search, Globe, Menu, X, ArrowUp, ArrowDown, ArrowRight } from "lucide-react";
 import logo from "@/assets/lynek-logo.png";
 
 /** Nigerian energy context: NGX oil & gas names, downstream marketers, and benchmarks (illustrative). */
@@ -31,9 +31,33 @@ const links = [
   { label: "Contact", href: "/#contact" },
 ];
 
+/** Searchable index of pages, sections and services. */
+const searchIndex = [
+  { label: "Home", desc: "Lynek International — engineering practice", href: "/" },
+  { label: "About", desc: "The vision behind Lynek International", href: "/#about" },
+  { label: "Services", desc: "Full-spectrum engineering practice", href: "/#services" },
+  { label: "Well Construction", desc: "Drilling support & completions", href: "/#services" },
+  { label: "Well Intervention", desc: "Production restoration & optimisation", href: "/#services" },
+  { label: "Well Shut Down", desc: "Isolation, suspension & abandonment", href: "/#services" },
+  { label: "Instrumentation & Control", desc: "Engineering & commissioning", href: "/#services" },
+  { label: "Operations Management", desc: "Field leadership & QA/QC", href: "/#services" },
+  { label: "Asset Management", desc: "Integrity & lifecycle optimisation", href: "/#services" },
+  { label: "Equipment Procurement & Logistics", desc: "Supply chain & field delivery", href: "/#services" },
+  { label: "Oil Rig Waste Management", desc: "Environmental compliance", href: "/#services" },
+  { label: "Capacity Development", desc: "Training & local content", href: "/#services" },
+  { label: "Philosophy & objectives", desc: "How and why we operate", href: "/#philosophy" },
+  { label: "Founder", desc: "Dr. Engr. Irivike Lucky Ewhuba", href: "/#founder" },
+  { label: "Newsroom", desc: "Field record & updates", href: "/#newsroom" },
+  { label: "Careers", desc: "Build a career with Lynek", href: "/careers" },
+  { label: "Contact", desc: "Speak with the team", href: "/#contact" },
+];
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const solidNav = scrolled || pathname !== "/";
   const { scrollYProgress } = useScroll();
@@ -45,6 +69,30 @@ export function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSearchOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [searchOpen]);
+
+  function openSearch() {
+    setOpen(false);
+    setQuery("");
+    setSearchOpen(true);
+  }
+
+  const q = query.trim().toLowerCase();
+  const results = q
+    ? searchIndex.filter(
+        (item) =>
+          item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q),
+      )
+    : searchIndex;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)]">
@@ -103,7 +151,12 @@ export function Nav() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-5">
-            <button aria-label="Search" className="opacity-80 hover:opacity-100 transition">
+            <button
+              type="button"
+              aria-label="Search"
+              onClick={openSearch}
+              className="opacity-80 hover:opacity-100 transition"
+            >
               <Search className="h-4 w-4" />
             </button>
             <button aria-label="Region" className="opacity-80 hover:opacity-100 transition inline-flex items-center gap-1.5 text-[12px] font-medium">
@@ -128,6 +181,13 @@ export function Nav() {
             className="lg:hidden max-h-[min(70vh,28rem)] overflow-y-auto overscroll-y-contain border-t border-current/10 bg-paper text-ink shadow-lg"
           >
             <nav className="container-x flex flex-col py-1 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+              <button
+                type="button"
+                onClick={openSearch}
+                className="flex items-center gap-2 py-3.5 text-[15px] font-medium leading-snug border-b border-rule text-left active:bg-muted/50"
+              >
+                <Search className="h-4 w-4" /> Search
+              </button>
               {links.map((l) => (
                 <a
                   key={l.label}
@@ -148,6 +208,69 @@ export function Nav() {
         style={{ scaleX: progress }}
         className="origin-left h-[2px] bg-primary-bright"
       />
+
+      {/* Search overlay */}
+      {searchOpen && (
+        <div
+          className="fixed inset-0 z-[60] bg-ink/60 backdrop-blur-sm"
+          onClick={() => setSearchOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="container-x pt-[calc(5rem+env(safe-area-inset-top,0px))]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto max-w-2xl overflow-hidden rounded-lg border border-rule bg-paper text-ink shadow-2xl">
+              <div className="flex items-center gap-3 border-b border-rule px-4">
+                <Search className="h-4 w-4 shrink-0 text-ink-3" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search services, sections and pages…"
+                  className="min-h-12 w-full bg-transparent py-3 text-[15px] outline-none placeholder:text-ink-3"
+                />
+                <button
+                  type="button"
+                  aria-label="Close search"
+                  onClick={() => setSearchOpen(false)}
+                  className="shrink-0 text-ink-3 transition hover:text-ink"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <ul className="max-h-[min(60vh,24rem)] overflow-y-auto py-1">
+                {results.length === 0 ? (
+                  <li className="px-4 py-6 text-[14px] text-ink-3">
+                    No results for &ldquo;{query}&rdquo;.
+                  </li>
+                ) : (
+                  results.map((item) => (
+                    <li key={item.label + item.href}>
+                      <a
+                        href={item.href}
+                        onClick={() => setSearchOpen(false)}
+                        className="group flex items-center justify-between gap-3 px-4 py-3 transition hover:bg-muted/60"
+                      >
+                        <span className="min-w-0">
+                          <span className="block text-[15px] font-medium text-ink">
+                            {item.label}
+                          </span>
+                          <span className="block truncate text-[13px] text-ink-3">
+                            {item.desc}
+                          </span>
+                        </span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-ink-3 transition-transform duration-300 group-hover:translate-x-1" />
+                      </a>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

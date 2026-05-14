@@ -4,31 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
 
-const credentials = [
-  {
-    k: "HND",
-    v: "Higher National Diploma, Instrumentation & Control Engineering — Petroleum Training Institute, Effurun",
-  },
-  {
-    k: "B.Eng",
-    v: "Bachelor of Engineering, Petroleum & Gas Engineering — University of Port Harcourt",
-  },
-  { k: "Doctorate", v: "Doctorate in Operations Management" },
-  {
-    k: "Certified",
-    v: "International Well Control Forum (IWCF) · Electrical Wiring Installation License (EWIL)",
-  },
-];
-
-const tenure = [
-  "Heritage Energy Operational Services Limited",
-  "Shell Petroleum Development Company",
-  "Neconde Energy Nigeria Limited",
-  "Salvic Petroleum Resources Limited",
-  "Hyprops Nigeria Limited",
-  "Petronella Nigeria Limited",
-];
-
 export function People() {
   return (
     <section id="founder" className="bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
@@ -90,7 +65,7 @@ export function People() {
             <figcaption className="mt-5 border-t border-rule pt-4 sm:mt-6 sm:pt-5">
               <div className="font-display text-lg text-ink sm:text-xl">Dr. Engr. Irivike Lucky Ewhuba</div>
               <div className="overline text-ink-3 mt-2 text-[10px] leading-relaxed sm:text-[11px]">
-                Founder · Well Intervention Superintendent, Heritage Energy Operational Services Limited
+                Founder · MD/CEO
               </div>
             </figcaption>
           </div>
@@ -106,99 +81,55 @@ export function People() {
 
             <div className="mt-10 space-y-5 text-ink-2 text-[15px] leading-relaxed">
               <p>
-                Dr. Engr. Irivike Lucky Ewhuba is a distinguished engineer, visionary leader and accomplished
-                industry professional whose career in the oil and gas sector reflects resilience, innovation and
-                unwavering dedication to excellence. For more than two decades he has applied deep expertise
-                across petroleum engineering, well intervention, instrumentation and control, operational
-                management, quality assurance and field leadership — turning technical complexity into measurable
-                results and earning respect across the Nigerian energy industry.
+                The vision behind Lynek International was shaped through years of discipline, sacrifice, and deep
+                professional experience within the oil, gas, engineering, and industrial sectors. After decades of
+                working in demanding operational environments, leading complex well intervention projects, and
+                contributing to the growth and stability of major energy organizations, Dr. Engr. Irivike Lucky
+                Ewhuba developed a vision that extended beyond personal success. He began to see the need for a
+                platform that would not only deliver technical solutions but also redefine how excellence,
+                integrity, and innovation are practiced within the industry. From this conviction, Lynek
+                International was conceived not merely as a business entity, but as a legacy-driven institution
+                built to solve real-world industrial challenges, create sustainable value, and raise the standard
+                of professional service delivery.
               </p>
               <p>
-                Born with a passion for growth and continuous learning, he built an educational foundation
-                matched by internationally recognised certifications — proof that leadership, in his view, is
-                rooted in ongoing development and mastery of craft.
-              </p>
-            </div>
-
-            <div className="mt-12">
-              <div className="overline text-ink-3">Well intervention &amp; production optimisation</div>
-              <div className="mt-5 space-y-5 text-ink-2 text-[15px] leading-relaxed">
-                <p>
-                  His work has supported increased production, improved efficiency and long-term asset
-                  sustainability across multiple Nigerian oil fields — from major wellhead maintenance campaigns
-                  to perforation extensions, tubing integrity checks, gas-lift valve change-outs, cement squeeze
-                  operations, water shut-off technologies and coil tubing interventions.
-                </p>
-                <p>
-                  As Well Intervention Superintendent at Heritage Energy Operational Services Limited, he has led
-                  critical operations across OML-30 assets on fields including Afiesere, Eriemu, Olomoro, Kokori,
-                  Uzere and Evwreni — restoring wells, sustaining production growth and delivering substantial oil
-                  gains through disciplined planning, supervision and coordination.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-12">
-              <div className="overline text-ink-3">HSSE, quality &amp; professional integrity</div>
-              <p className="mt-5 text-ink-2 text-[15px] leading-relaxed">
-                He is a champion of international HSSE standards — promoting lifesaving rules, risk assessment,
-                job hazard analysis and safe operational practice in every organisation he has served. That
-                discipline, combined with calm judgement under pressure, underpins how he leads multidisciplinary
-                teams in high-risk environments where precision and accountability are paramount.
-              </p>
-            </div>
-
-            <div className="mt-12">
-              <div className="overline text-ink-3">Broader technical leadership</div>
-              <p className="mt-5 text-ink-2 text-[15px] leading-relaxed">
-                Across Shell Petroleum Development Company, Neconde Energy Nigeria Limited, Salvic Petroleum
-                Resources Limited, Hyprops Nigeria Limited, Petronella Nigeria Limited and other engineering and
-                energy firms, he has supervised remote monitoring installations, participated in commissioning
-                production facilities, handled critical well servicing, managed field logistics and coordinated
-                technical teams with consistency and professionalism.
-              </p>
-            </div>
-
-            <div className="mt-10 space-y-5 text-ink-2 text-[15px] leading-relaxed border-t border-rule pt-10">
-              <p>
-                Beyond titles and certifications, his journey speaks to perseverance, vision and the belief that
-                true success is built through dedication to excellence, commitment to learning and leading others
-                with wisdom and integrity.
+                His hope for Lynek International is to establish a globally competitive organization that reflects
+                precision, reliability, and excellence in every aspect of its operations. He envisions a company
+                where engineering expertise is combined with strong ethical values, where every project is
+                executed with discipline, safety consciousness, and unwavering commitment to quality. For him,
+                Lynek International represents more than corporate success; it is a platform designed to promote
+                innovation, encourage problem-solving, and introduce smarter, more efficient approaches to
+                industrial operations. He believes that when technical knowledge is guided by purpose and
+                integrity, it has the power to transform industries and communities alike.
               </p>
               <p>
-                Today he stands as more than an accomplished engineer: a legacy of impact, a reference for
-                professional excellence, and an inspiration to aspiring engineers, entrepreneurs and future
-                leaders shaping Nigeria&apos;s energy sector.
+                Beyond service delivery, Dr. Engr. Irivike Lucky Ewhuba carries a strong passion for human
+                development. One of his core aspirations for Lynek International is to create opportunities for
+                young professionals, engineers, and technicians who are eager to grow but lack access to
+                mentorship and exposure. He envisions the company as a training ground where knowledge is
+                transferred, skills are sharpened, and future industry leaders are developed. Through structured
+                guidance, real-world experience, and exposure to high-level projects, he hopes Lynek International
+                will serve as a bridge between potential and achievement, empowering individuals to build
+                meaningful and impactful careers.
+              </p>
+              <p>
+                His vision also extends to national and economic development. He believes that industries thrive
+                when built on competence, accountability, and innovation. Therefore, he hopes Lynek International
+                will contribute meaningfully to local content development, job creation, and the strengthening of
+                technical capacity within the energy and engineering sectors. By upholding international best
+                practices while maintaining strong local relevance, he aims to position the company as a trusted
+                partner in both public and private sector projects.
+              </p>
+              <p>
+                At the heart of this vision is a deeply rooted belief that true greatness is not measured by
+                wealth or recognition alone, but by impact, legacy, and the ability to influence positive change.
+                Dr. Engr. Irivike Lucky Ewhuba sees Lynek International as a lifelong mission a structure that will
+                outlive individual effort and continue to inspire excellence for generations. He hopes it will
+                stand as a symbol of what is possible when experience, vision, and purpose come together: a
+                company built not just to operate, but to lead, transform, and endure.
               </p>
             </div>
 
-            <div className="mt-12">
-              <div className="overline text-ink-3">Education &amp; certification</div>
-              <ul className="mt-5 divide-y divide-rule border-y border-rule">
-                {credentials.map((c) => (
-                  <li key={c.k} className="grid grid-cols-1 gap-2 py-4 sm:grid-cols-12 sm:gap-4">
-                    <div className="col-span-12 sm:col-span-2 font-mono text-[10px] uppercase tracking-widest text-ink-3 sm:pt-1 sm:text-[11px]">
-                      {c.k}
-                    </div>
-                    <div className="col-span-12 sm:col-span-10 text-ink-2 text-[14px] leading-relaxed sm:text-[15px]">
-                      {c.v}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-12">
-              <div className="overline text-ink-3">Career — selected organisations</div>
-              <ul className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-                {tenure.map((t, i) => (
-                  <li key={t} className="flex items-baseline gap-3 text-ink-2 text-[15px]">
-                    <span className="font-mono text-[11px] text-ink-3">0{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </motion.figure>
       </div>
