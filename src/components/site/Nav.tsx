@@ -38,7 +38,7 @@ const searchIndex = [
   { label: "Services", desc: "Full-spectrum engineering practice", href: "/#services" },
   { label: "Well Construction", desc: "Drilling support & completions", href: "/#services" },
   { label: "Well Intervention", desc: "Production restoration & optimisation", href: "/#services" },
-  { label: "Well Shut Down", desc: "Isolation, suspension & abandonment", href: "/#services" },
+  { label: "Well Abandorment", desc: "Isolation, suspension & abandonment", href: "/#services" },
   { label: "Instrumentation & Control", desc: "Engineering & commissioning", href: "/#services" },
   { label: "Operations Management", desc: "Field leadership & QA/QC", href: "/#services" },
   { label: "Asset Management", desc: "Integrity & lifecycle optimisation", href: "/#services" },

@@ -29,7 +29,7 @@ const items = [
   },
   {
     n: "03",
-    title: "Well Shut Down",
+    title: "Well Abandorment",
     sub: "Isolation, suspension & abandonment",
     body: "Planned and emergency well shut-in, isolation and suspension — securing wells through to decommissioning and abandonment with full regulatory and well-integrity compliance.",
     img: engine2,
