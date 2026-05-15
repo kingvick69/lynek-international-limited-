@@ -3,8 +3,8 @@ import type { NewsApiResponse, NewsArticle, NewsDataArticle } from "./news-types
 
 const NEWSDATA_BASE = "https://newsdata.io/api/1/latest";
 const MAX_ARTICLES = 20;
-const OIL_QUERY =
-  'oil OR petroleum OR "crude oil" OR "oil and gas" OR OPEC OR "oil price" OR upstream';
+const PAGE_SIZE = 10;
+const OIL_QUERY = "oil OR petroleum OR OPEC OR crude";
 
 type DailyCache = {
   dateKey: string;
@@ -47,25 +47,24 @@ function normalizeArticle(article: NewsDataArticle): NewsArticle | null {
   };
 }
 
-async function requestOilNews(size: number): Promise<NewsArticle[]> {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    throw new Error("NEWSDATA_API_KEY is not configured.");
-  }
-
+async function requestOilNewsPage(
+  apiKey: string,
+  page?: string,
+): Promise<{ articles: NewsArticle[]; nextPage?: string }> {
   const params = new URLSearchParams({
     apikey: apiKey,
     q: OIL_QUERY,
     language: "en",
-    size: String(Math.min(size, 50)),
+    size: String(PAGE_SIZE),
     removeduplicate: "1",
   });
+  if (page) params.set("page", page);
 
   const response = await fetch(`${NEWSDATA_BASE}?${params.toString()}`, {
     headers: { Accept: "application/json" },
   });
 
-  const payload = (await response.json()) as NewsApiResponse;
+  const payload = (await response.json()) as NewsApiResponse & { nextPage?: string };
 
   if (!response.ok || payload.status !== "success") {
     const detail =
@@ -76,10 +75,33 @@ async function requestOilNews(size: number): Promise<NewsArticle[]> {
   const rawResults = Array.isArray(payload.results) ? payload.results : [];
   const articles = rawResults
     .map(normalizeArticle)
-    .filter((article): article is NewsArticle => article !== null)
-    .slice(0, MAX_ARTICLES);
+    .filter((article): article is NewsArticle => article !== null);
 
-  return articles;
+  return { articles, nextPage: payload.nextPage };
+}
+
+async function requestOilNews(): Promise<NewsArticle[]> {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    throw new Error("NEWSDATA_API_KEY is not configured.");
+  }
+
+  const first = await requestOilNewsPage(apiKey);
+  const seen = new Set(first.articles.map((a) => a.id));
+  const merged = [...first.articles];
+
+  if (merged.length < MAX_ARTICLES && first.nextPage) {
+    const second = await requestOilNewsPage(apiKey, first.nextPage);
+    for (const article of second.articles) {
+      if (!seen.has(article.id)) {
+        merged.push(article);
+        seen.add(article.id);
+      }
+      if (merged.length >= MAX_ARTICLES) break;
+    }
+  }
+
+  return merged.slice(0, MAX_ARTICLES);
 }
 
 export async function fetchOilNews(): Promise<NewsArticle[]> {
@@ -89,7 +111,7 @@ export async function fetchOilNews(): Promise<NewsArticle[]> {
     return dailyCache.articles;
   }
 
-  const articles = await requestOilNews(MAX_ARTICLES);
+  const articles = await requestOilNews();
   dailyCache = { dateKey, articles };
   return articles;
 }

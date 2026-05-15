@@ -5,8 +5,9 @@
 
 const NEWSDATA_BASE = "https://newsdata.io/api/1/latest";
 const MAX_ARTICLES = 20;
-const OIL_QUERY =
-  'oil OR petroleum OR "crude oil" OR "oil and gas" OR OPEC OR "oil price" OR upstream';
+/** Free NewsData.io plans allow up to 10 results per request. */
+const PAGE_SIZE = 10;
+const OIL_QUERY = "oil OR petroleum OR OPEC OR crude";
 
 type NewsArticle = {
   id: string;
@@ -32,8 +33,9 @@ type NewsDataArticle = {
 
 type NewsApiResponse = {
   status?: string;
-  results?: NewsDataArticle[];
+  results?: NewsDataArticle[] | { message?: string; code?: string };
   message?: string;
+  nextPage?: string;
 };
 
 type VercelRequest = { method?: string };
@@ -66,6 +68,51 @@ function normalizeArticle(raw: NewsDataArticle): NewsArticle | null {
   };
 }
 
+function newsDataError(payload: NewsApiResponse, httpStatus: number): string {
+  const nested =
+    payload.results &&
+    typeof payload.results === "object" &&
+    !Array.isArray(payload.results)
+      ? payload.results.message
+      : undefined;
+  return (
+    (typeof payload.message === "string" && payload.message) ||
+    nested ||
+    `NewsData.io error (${httpStatus})`
+  );
+}
+
+async function fetchNewsPage(
+  apiKey: string,
+  page?: string,
+): Promise<{ articles: NewsArticle[]; nextPage?: string }> {
+  const params = new URLSearchParams({
+    apikey: apiKey,
+    q: OIL_QUERY,
+    language: "en",
+    size: String(PAGE_SIZE),
+    removeduplicate: "1",
+  });
+  if (page) params.set("page", page);
+
+  const response = await fetch(`${NEWSDATA_BASE}?${params.toString()}`, {
+    headers: { Accept: "application/json" },
+  });
+
+  const payload = (await response.json()) as NewsApiResponse;
+
+  if (!response.ok || payload.status !== "success") {
+    throw new Error(newsDataError(payload, response.status));
+  }
+
+  const rawResults = Array.isArray(payload.results) ? payload.results : [];
+  const articles = rawResults
+    .map(normalizeArticle)
+    .filter((article): article is NewsArticle => article !== null);
+
+  return { articles, nextPage: payload.nextPage };
+}
+
 async function fetchOilNewsFromApi(): Promise<NewsArticle[]> {
   const apiKey = process.env.NEWSDATA_API_KEY?.trim();
   if (!apiKey) {
@@ -77,40 +124,22 @@ async function fetchOilNewsFromApi(): Promise<NewsArticle[]> {
     return dailyCache.articles;
   }
 
-  const params = new URLSearchParams({
-    apikey: apiKey,
-    q: OIL_QUERY,
-    language: "en",
-    size: String(MAX_ARTICLES),
-    removeduplicate: "1",
-  });
+  const first = await fetchNewsPage(apiKey);
+  const seen = new Set(first.articles.map((a) => a.id));
+  const merged = [...first.articles];
 
-  const response = await fetch(`${NEWSDATA_BASE}?${params.toString()}`, {
-    headers: { Accept: "application/json" },
-  });
-
-  const payload = (await response.json()) as NewsApiResponse;
-
-  if (!response.ok || payload.status !== "success") {
-    const nested =
-      payload.results &&
-      typeof payload.results === "object" &&
-      !Array.isArray(payload.results)
-        ? (payload.results as { message?: string }).message
-        : undefined;
-    const detail =
-      (typeof payload.message === "string" && payload.message) ||
-      nested ||
-      `NewsData.io error (${response.status})`;
-    throw new Error(detail);
+  if (merged.length < MAX_ARTICLES && first.nextPage) {
+    const second = await fetchNewsPage(apiKey, first.nextPage);
+    for (const article of second.articles) {
+      if (!seen.has(article.id)) {
+        merged.push(article);
+        seen.add(article.id);
+      }
+      if (merged.length >= MAX_ARTICLES) break;
+    }
   }
 
-  const rawResults = Array.isArray(payload.results) ? payload.results : [];
-  const articles = rawResults
-    .map(normalizeArticle)
-    .filter((article): article is NewsArticle => article !== null)
-    .slice(0, MAX_ARTICLES);
-
+  const articles = merged.slice(0, MAX_ARTICLES);
   dailyCache = { dateKey, articles };
   return articles;
 }
@@ -134,9 +163,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("[api/oil-news]", message);
 
+    const code = message.includes("not configured")
+      ? "missing_api_key"
+      : /api key|unauthorized/i.test(message)
+        ? "invalid_api_key"
+        : "upstream_error";
+
     res.status(503).json({
       error: "News temporarily unavailable",
-      ...(process.env.VERCEL_ENV === "preview" ? { detail: message } : {}),
+      code,
     });
   }
 }
