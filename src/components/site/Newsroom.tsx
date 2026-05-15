@@ -1,9 +1,11 @@
+import { Component, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import fallbackImg from "@/assets/news-1.jpg";
 import { getOilNews } from "@/lib/get-oil-news";
+import { loadOilNews } from "@/lib/load-oil-news";
 import type { NewsArticle } from "@/lib/news-types";
 
 const ease = [0.2, 0.7, 0.2, 1] as const;
@@ -17,6 +19,15 @@ function formatArticleDate(iso: string) {
     month: "short",
     year: "numeric",
   }).format(parsed);
+}
+
+function NewsUnavailable() {
+  return (
+    <p className="text-ink-2 text-[15px] leading-relaxed max-w-xl">
+      Industry news is temporarily unavailable. Please check back shortly or contact us for press
+      enquiries.
+    </p>
+  );
 }
 
 function NewsCard({ article, index }: { article: NewsArticle; index: number }) {
@@ -90,15 +101,59 @@ function NewsSkeleton() {
   );
 }
 
-export function Newsroom() {
+function NewsroomContent() {
   const fetchNews = useServerFn(getOilNews);
   const { data: articles, isPending, isError } = useQuery({
     queryKey: ["oil-news"],
-    queryFn: () => fetchNews(),
+    queryFn: () => loadOilNews(() => fetchNews()),
     staleTime: STALE_MS,
     gcTime: STALE_MS,
+    retry: false,
   });
 
+  const safeArticles = Array.isArray(articles) ? articles : [];
+  const showUnavailable = isError || (!isPending && safeArticles.length === 0);
+
+  return (
+    <>
+      {showUnavailable ? <NewsUnavailable /> : null}
+
+      {!showUnavailable ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {isPending
+            ? Array.from({ length: 6 }, (_, i) => <NewsSkeleton key={i} />)
+            : safeArticles.map((article, i) => (
+                <NewsCard key={article.id} article={article} index={i} />
+              ))}
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+class NewsroomErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    console.error("[Newsroom]", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <NewsUnavailable />;
+    }
+    return this.props.children;
+  }
+}
+
+export function Newsroom() {
   return (
     <section id="newsroom" className="bg-paper py-20 sm:py-28 lg:py-32 xl:py-40">
       <div className="container-x">
@@ -146,20 +201,9 @@ export function Newsroom() {
           </motion.div>
         </div>
 
-        {isError ? (
-          <p className="text-ink-2 text-[15px] leading-relaxed max-w-xl">
-            Industry news is temporarily unavailable. Please check back shortly or contact us for
-            press enquiries.
-          </p>
-        ) : null}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {isPending
-            ? Array.from({ length: 6 }, (_, i) => <NewsSkeleton key={i} />)
-            : (articles ?? []).map((article, i) => (
-                <NewsCard key={article.id} article={article} index={i} />
-              ))}
-        </div>
+        <NewsroomErrorBoundary>
+          <NewsroomContent />
+        </NewsroomErrorBoundary>
       </div>
     </section>
   );
