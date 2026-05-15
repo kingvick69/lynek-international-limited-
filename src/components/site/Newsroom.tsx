@@ -4,6 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import fallbackImg from "@/assets/news-1.jpg";
+import { NewsroomSlider } from "@/components/site/NewsroomSlider";
+import { FALLBACK_OIL_NEWS } from "@/lib/fallback-oil-news";
 import { getOilNews } from "@/lib/get-oil-news";
 import { loadOilNews } from "@/lib/load-oil-news";
 import type { NewsArticle } from "@/lib/news-types";
@@ -21,15 +23,6 @@ function formatArticleDate(iso: string) {
   }).format(parsed);
 }
 
-function NewsUnavailable() {
-  return (
-    <p className="text-ink-2 text-[15px] leading-relaxed max-w-xl">
-      Industry news is temporarily unavailable. Please check back shortly or contact us for press
-      enquiries.
-    </p>
-  );
-}
-
 function NewsCard({ article, index }: { article: NewsArticle; index: number }) {
   return (
     <motion.a
@@ -42,7 +35,7 @@ function NewsCard({ article, index }: { article: NewsArticle; index: number }) {
       transition={{ duration: 0.9, ease, delay: index * 0.06 }}
       className="group flex flex-col h-full border border-rule bg-paper shadow-[var(--shadow-card)] overflow-hidden transition-colors hover:border-ink/15"
     >
-      <motion.div className="relative overflow-hidden aspect-[16/10] shrink-0">
+      <div className="relative overflow-hidden aspect-[16/10] shrink-0">
         <img
           src={article.imageUrl ?? fallbackImg}
           alt=""
@@ -51,7 +44,7 @@ function NewsCard({ article, index }: { article: NewsArticle; index: number }) {
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-105"
         />
-      </motion.div>
+      </div>
       <div className="flex flex-col flex-1 p-5 sm:p-6 lg:p-7">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <time
@@ -101,9 +94,18 @@ function NewsSkeleton() {
   );
 }
 
+function SliderSkeleton() {
+  return (
+    <div
+      className="min-h-[clamp(22rem,62vh,36rem)] w-full animate-pulse border border-rule bg-muted"
+      aria-hidden
+    />
+  );
+}
+
 function NewsroomContent() {
   const fetchNews = useServerFn(getOilNews);
-  const { data: articles, isPending, isError } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["oil-news"],
     queryFn: () => loadOilNews(() => fetchNews()),
     staleTime: STALE_MS,
@@ -111,23 +113,28 @@ function NewsroomContent() {
     retry: false,
   });
 
-  const safeArticles = Array.isArray(articles) ? articles : [];
-  const showUnavailable = isError || (!isPending && safeArticles.length === 0);
+  const isFallback = data?.source === "fallback";
+  const articles = Array.isArray(data?.articles) ? data.articles : [];
+
+  if (isPending) {
+    return <SliderSkeleton />;
+  }
+
+  if (isFallback) {
+    return (
+      <NewsroomSlider
+        articles={articles.length > 0 ? articles : FALLBACK_OIL_NEWS}
+        showFallbackNote
+      />
+    );
+  }
 
   return (
-    <>
-      {showUnavailable ? <NewsUnavailable /> : null}
-
-      {!showUnavailable ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {isPending
-            ? Array.from({ length: 6 }, (_, i) => <NewsSkeleton key={i} />)
-            : safeArticles.map((article, i) => (
-                <NewsCard key={article.id} article={article} index={i} />
-              ))}
-        </div>
-      ) : null}
-    </>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {articles.map((article, i) => (
+        <NewsCard key={article.id} article={article} index={i} />
+      ))}
+    </div>
   );
 }
 
@@ -147,7 +154,7 @@ class NewsroomErrorBoundary extends Component<
 
   render() {
     if (this.state.hasError) {
-      return <NewsUnavailable />;
+      return <NewsroomSlider articles={FALLBACK_OIL_NEWS} showFallbackNote />;
     }
     return this.props.children;
   }
