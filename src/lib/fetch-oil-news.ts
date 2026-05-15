@@ -1,3 +1,4 @@
+import { getNewsDataErrorMessage } from "./newsdata-errors";
 import type { NewsApiResponse, NewsArticle, NewsDataArticle } from "./news-types";
 
 const NEWSDATA_BASE = "https://newsdata.io/api/1/latest";
@@ -18,9 +19,14 @@ function utcDateKey() {
 
 function getApiKey(): string | undefined {
   if (typeof process !== "undefined" && process.env?.NEWSDATA_API_KEY) {
-    return process.env.NEWSDATA_API_KEY;
+    return process.env.NEWSDATA_API_KEY.trim();
   }
-  return import.meta.env?.NEWSDATA_API_KEY as string | undefined;
+  try {
+    const env = (import.meta as ImportMeta & { env?: Record<string, string> }).env;
+    return env?.NEWSDATA_API_KEY?.trim();
+  } catch {
+    return undefined;
+  }
 }
 
 function normalizeArticle(article: NewsDataArticle): NewsArticle | null {
@@ -62,11 +68,13 @@ async function requestOilNews(size: number): Promise<NewsArticle[]> {
   const payload = (await response.json()) as NewsApiResponse;
 
   if (!response.ok || payload.status !== "success") {
-    const detail = payload.message ?? response.statusText;
-    throw new Error(detail || "Failed to fetch oil news.");
+    const detail =
+      getNewsDataErrorMessage(payload) ?? response.statusText ?? "Failed to fetch oil news.";
+    throw new Error(detail);
   }
 
-  const articles = (payload.results ?? [])
+  const rawResults = Array.isArray(payload.results) ? payload.results : [];
+  const articles = rawResults
     .map(normalizeArticle)
     .filter((article): article is NewsArticle => article !== null)
     .slice(0, MAX_ARTICLES);
