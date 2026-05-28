@@ -38,7 +38,7 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mbdwedww";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mpqnrarj";
 
 type ContactFormProps = {
   className?: string;
