@@ -4,7 +4,7 @@ import logo from "@/assets/lynek-logo.png";
 import { ContactForm } from "@/components/site/ContactForm";
 
 const phones = ["+2347055742773", "+2347072437336", "+2347011060586"];
-const email = "info@lynekinltd.com";
+const email = "info@lynekintltd.com";
 
 const cols: {
   title: string;
